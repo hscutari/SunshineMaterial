@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <color name="background_app">#edece2</color>
     <color name="Primary_Red_50">#FFEBEE</color>
     <color name="Primary_Red_100">#FFCDD2</color>
     <color name="Primary_Red_200">#EF9A9A</color>
