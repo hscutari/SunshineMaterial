@@ -37,6 +37,10 @@ public class WetherAdapter extends RecyclerView.Adapter<WetherAdapter.ViewHolder
         mContext = context;
     }
 
+    public void addArray(String[] myDataset) {
+        mDataset = myDataset;
+    }
+
     // Create new views (invoked by the layout manager)
     @Override
     public WetherAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
