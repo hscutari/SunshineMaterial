@@ -71,6 +71,12 @@ public class WetherAdapter extends RecyclerView.Adapter<WetherAdapter.ViewHolder
     }
 
     private int lastPosition = -1;
+
+    public String getItem(int position)
+    {
+        return mDataset[position];
+    }
+
     private void setAnimation(View viewToAnimate, int position)
     {
         if (position > lastPosition)

@@ -5,6 +5,7 @@ package com.example.henriquescutari.sunshinematerial;
  */
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -85,7 +86,24 @@ public class ForecastFragment extends Fragment {
         Lsttext.setLayoutManager(new LinearLayoutManager(this.getActivity()));
 
         Lsttext.setAdapter(_ArrAdapter);
+
+        Lsttext.addOnItemTouchListener(
+                new RecyclerItemClickListener(_context, new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        String item = _ArrAdapter.getItem(position);
+                        viewDatail(item);
+                    }
+                })
+        );
+
         return rootView;
+    }
+
+    public void viewDatail(String msgDay) {
+        Intent intent = new Intent(_context, DetailWether.class);
+        intent.putExtra("day_msg", msgDay);
+        startActivity(intent);
     }
 
     private class fetchWetherTask extends AsyncTask<String, Void, String[]>
