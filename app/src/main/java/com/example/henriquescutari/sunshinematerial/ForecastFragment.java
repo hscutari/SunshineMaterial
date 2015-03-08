@@ -6,9 +6,11 @@ package com.example.henriquescutari.sunshinematerial;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -56,12 +58,24 @@ public class ForecastFragment extends Fragment {
         int id = item.getItemId();
 
         if(id == R.id.action_refresh){
-            fetchWetherTask task = new fetchWetherTask();
-            task.execute("94043");
+            updateWeather();
             return  true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+        updateWeather();
+    }
+
+    private void updateWeather(){
+        fetchWetherTask task = new fetchWetherTask();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String Location = prefs.getString(getString(R.string.pref_value), getString(R.string.Location));
+        task.execute(Location);
     }
 
     @Override
@@ -70,16 +84,9 @@ public class ForecastFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
-        String[] arr = {
-                "Today - Sunny - 8863",
-                "Tomorrow - Froggy - 70/40",
-                "Wends - Cloudy - 72/63",
-                "Thurs - Asteroids - 75/65"
-        };
-
         _context = this.getActivity();
 
-        _ArrAdapter = new WetherAdapter(_context ,arr);
+        _ArrAdapter = new WetherAdapter(_context ,new String[0]);
 
         Lsttext = (RecyclerView) rootView.findViewById(R.id.my_recycler_view);
 
@@ -227,6 +234,21 @@ public class ForecastFragment extends Fragment {
          * Prepare the weather high/lows for presentation.
          */
         private String formatHighLows(double high, double low) {
+
+
+            SharedPreferences sheredPrefs =
+                    PreferenceManager.getDefaultSharedPreferences(getActivity());
+
+            String unitType = sheredPrefs.getString(getString(R.string.pref_units_key),
+                    getString(R.string.pref_units_metric));
+
+            if(unitType.equals(getString(R.string.pref_units_imperial))){
+                high = (high * 1.8) + 32;
+                low = (low * 1.8) + 32;
+            }else if(!unitType.equals(getString(R.string.pref_units_metric))){
+                Log.d(LOG_TAG, "Unidade não encontrada: " + unitType);
+            }
+
             // For presentation, assume the user doesn't care about tenths of a degree.
             long roundedHigh = Math.round(high);
             long roundedLow = Math.round(low);

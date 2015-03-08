@@ -7,4 +7,15 @@
     <string name="title_activity_sunshine_activity_main">SunshineActivityMainActivity</string>
     <string name="refresh">Refresh</string>
     <string name="title_activity_detail_wether">DetailWether</string>
+
+    <string name="Location" translate="false">Location</string>
+    <string name="pref_value" translate="false">94043</string>
+
+    <string name="pref_units_label" translate="false">Temperature Units</string>
+    <string name="pref_units_key" translate="false">units</string>
+    <string name="pref_units_metric" translate="false">Metros</string>
+    <string name="pref_units_imperial" translate="false">Imperial</string>
+
+    <string name="action_map" translate="false">Map</string>
+    <string name="action_share" translate="false">Share</string>
 </resources>
